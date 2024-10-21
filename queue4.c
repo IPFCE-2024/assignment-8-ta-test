@@ -3,68 +3,75 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "queue.h"
-#include "node.h"
+#include "queue4.h"
 
+void push(int element, node **head) {
+    node *n = (node *)malloc(sizeof(node));
+    if (!n) {
+        fprintf(stderr, "%s:%d Allocation with malloc() failed.\n", __FILE__,
+                __LINE__);
+        exit(1);
+    }
 
+    n->data = element;
+    n->next = *head;
+    *head = n;
+}
 
-void init_queue(queue *q);
-bool empty(const queue *q);
-void enqueue(queue *q, int x);
-int dequeue(queue *q);
-void print_queue(const queue *q);
+int pop(node **head) {
+    if (*head == NULL) {
+        fprintf(stderr, "%s:%d The queue is empty. It is not possible to dequeue.\n",
+                __FILE__, __LINE__);
+        exit(1);
+    }
 
-// queue.c
-// #include "queue.h"
-// #include <stdlib.h>
+    // queue is a FIFO data structure, so we remove the first element
+    node *tmp = *head;
+    node *prev = NULL;
+
+    // traverse to the last node
+    while (tmp->next != NULL) {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+
+    const int item = tmp->data;
+
+    if (prev != NULL) {
+        prev->next = NULL;
+    } else {
+        *head = NULL;
+    }
+
+    free(tmp);
+    return item;
+}
 
 void init_queue(queue *q) {
-  q->front = NULL;
-  q->rear = NULL;
-  q->size = 0;
+    q->front = NULL;
+    q->rear = NULL;
+    q->size = 0;
 }
 
 bool empty(const queue *q) {
-  return q->front == NULL && q->rear == NULL && q->size == 0;
+    return q->front == NULL && q->rear == NULL && q->size == 0;
+}
+
+bool full(const queue *q) {
+    return false;
 }
 
 void enqueue(queue *q, int x) {
-  node *n = (node *)malloc(sizeof(node));
-  if (!n) {
-    fprintf(stderr, "%s:%d Allocation with malloc() failed.\n", __FILE__,
-            __LINE__);
-    exit(1);
-  }
-
-  n->data = x;
-  n->next = NULL;
-
-  if (empty(q)) {
-    q->front = n;
-    q->rear = n;
-  } else {
-    q->rear->next = n;
-    q->rear = n;
-  }
-  q->size++;
+    // use push to add elements to the queue
+    push(x, &q->front);
+    q->size++;
 }
 
 int dequeue(queue *q) {
-  if (empty(q)) {
-    fprintf(stderr,
-            "%s:%d The queue is empty. It is not possible to dequeue.\n",
-            __FILE__, __LINE__);
-  }
-  node *tmp = q->front;
-  const int item = tmp->data;
-  q->front = tmp->next;
-  if (q->front == NULL) {
-    q->rear = NULL;
-  }
-
-  free(tmp);
-  q->size--;
-  return item;
+    // use pop to remove elements from the queue
+    int item = pop(&q->front);
+    q->size--;
+    return item;
 }
 
 void print_queue(const queue *q) {

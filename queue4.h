@@ -3,6 +3,10 @@
 #include <stdbool.h>
 
 #include "node.h"
+
+typedef struct {
+  node *head;
+} stack;
  
 typedef struct queue {
   node *front;
