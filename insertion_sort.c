@@ -26,12 +26,12 @@ node *sorted_insert(node *sorted_list, node *new_node) {
 }
 
 // This function performs insertion sort on a linked list.
-node *isort(node *head) {
+node *isort(node *list) {
     // Start with an empty list as the sorted list.
     node *sorted_list = NULL;
 
     // Traverse the original list.
-    node *current = head;
+    node *current = list;
     while (current != NULL) {
         // Save the next node because we will modify current->next in sorted_insert.
         node *next = current->next;
