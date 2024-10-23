@@ -7,18 +7,7 @@
 #include "node.h"
 
 
-
-void init_queue(queue *q);
-bool empty(const queue *q);
-void enqueue(queue *q, int x);
-int dequeue(queue *q);
-void print_queue(const queue *q);
-
-// queue.c
-// #include "queue.h"
-// #include <stdlib.h>
-
-void init_queue(queue *q) {
+void initialize(queue *q) {
   q->front = NULL;
   q->rear = NULL;
   q->size = 0;
@@ -26,6 +15,10 @@ void init_queue(queue *q) {
 
 bool empty(const queue *q) {
   return q->front == NULL && q->rear == NULL && q->size == 0;
+}
+
+bool full(const queue *q) {
+  return false;
 }
 
 void enqueue(queue *q, int x) {
@@ -81,48 +74,48 @@ void print_queue(const queue *q) {
   printf("\n");
 }
 
-int main() {
-  queue q;
-  init_queue(&q);
-  assert(empty(&q));
-  const int x0 = 2;
-  const int x1 = 3;
-  enqueue(&q, x0);
-  assert(!empty(&q));
-  enqueue(&q, x1);
-  assert(!empty(&q));
-  print_queue(&q);
-  const int y0 = dequeue(&q);
-  assert(!empty(&q));
-  print_queue(&q);
-  const int y1 = dequeue(&q);
-  print_queue(&q);
-  assert(empty(&q));
+// int main() {
+//   queue q;
+//   initialize(&q);
+//   assert(empty(&q));
+//   const int x0 = 2;
+//   const int x1 = 3;
+//   enqueue(&q, x0);
+//   assert(!empty(&q));
+//   enqueue(&q, x1);
+//   assert(!empty(&q));
+//   print_queue(&q);
+//   const int y0 = dequeue(&q);
+//   assert(!empty(&q));
+//   print_queue(&q);
+//   const int y1 = dequeue(&q);
+//   print_queue(&q);
+//   assert(empty(&q));
 
-  assert(x0 == y0);
-  assert(x1 == y1);
+//   assert(x0 == y0);
+//   assert(x1 == y1);
 
-  int xs[] = {1, 2, 3, 4, 5};
-  const int len = sizeof(xs) / sizeof(int);
-  for (int i = 0; i < len; i++) {
-    enqueue(&q, xs[i]);
-  }
+//   int xs[] = {1, 2, 3, 4, 5};
+//   const int len = sizeof(xs) / sizeof(int);
+//   for (int i = 0; i < len; i++) {
+//     enqueue(&q, xs[i]);
+//   }
 
-  printf("The queue is: ");
-  print_queue(&q);
+//   printf("The queue is: ");
+//   print_queue(&q);
 
-  int ys[sizeof(xs) / sizeof(int)];
-  for (int i = 0; i < len; i++) {
-    ys[i] = dequeue(&q);
-    printf("The queue is: ");
-    print_queue(&q);
-  }
+//   int ys[sizeof(xs) / sizeof(int)];
+//   for (int i = 0; i < len; i++) {
+//     ys[i] = dequeue(&q);
+//     printf("The queue is: ");
+//     print_queue(&q);
+//   }
 
-  for (int i = 0; i < len; i++) {
-    assert(xs[i] == ys[i]);
-  }
+//   for (int i = 0; i < len; i++) {
+//     assert(xs[i] == ys[i]);
+//   }
 
-  printf("All tests passed :)\n");
+//   printf("All tests passed :)\n");
 
-  return 0;
-}
+//   return 0;
+// }

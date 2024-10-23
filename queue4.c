@@ -47,7 +47,7 @@ int pop(node **head) {
     return item;
 }
 
-void init_queue(queue *q) {
+void initialize(queue *q) {
     q->front = NULL;
     q->rear = NULL;
     q->size = 0;
@@ -90,7 +90,7 @@ void print_queue(const queue *q) {
 
 int main() {
   queue q;
-  init_queue(&q);
+  inititialize(&q);
   assert(empty(&q));
   const int x0 = 2;
   const int x1 = 3;
