@@ -6,48 +6,6 @@
 #include "queue.h"
 #include "node.h"
 
-void push(int element, node **head) {
-    node *n = (node *)malloc(sizeof(node));
-    if (!n) {
-        fprintf(stderr, "%s:%d Allocation with malloc() failed.\n", __FILE__,
-                __LINE__);
-        exit(1);
-    }
-
-    n->data = element;
-    n->next = *head;
-    *head = n;
-}
-
-int pop(node **head) {
-    if (*head == NULL) {
-        fprintf(stderr, "%s:%d The queue is empty. It is not possible to dequeue.\n",
-                __FILE__, __LINE__);
-        exit(1);
-    }
-
-    // queue is a FIFO data structure, so we remove the first element
-    node *tmp = *head;
-    node *prev = NULL;
-
-    // traverse to the last node
-    while (tmp->next != NULL) {
-        prev = tmp;
-        tmp = tmp->next;
-    }
-
-    const int item = tmp->data;
-
-    if (prev != NULL) {
-        prev->next = NULL;
-    } else {
-        *head = NULL;
-    }
-
-    free(tmp);
-    return item;
-}
-
 void initialize(queue *q) {
   q->front = NULL;
   q->rear = NULL;
@@ -99,6 +57,48 @@ int dequeue(queue *q) {
   free(tmp);
   q->size--;
   return item;
+}
+
+void push(int element, node **head) {
+    node *n = (node *)malloc(sizeof(node));
+    if (!n) {
+        fprintf(stderr, "%s:%d Allocation with malloc() failed.\n", __FILE__,
+                __LINE__);
+        exit(1);
+    }
+
+    n->data = element;
+    n->next = *head;
+    *head = n;
+}
+
+int pop(node **head) {
+    if (*head == NULL) {
+        fprintf(stderr, "%s:%d The queue is empty. It is not possible to dequeue.\n",
+                __FILE__, __LINE__);
+        exit(1);
+    }
+
+    // queue is a FIFO data structure, so we remove the first element
+    node *tmp = *head;
+    node *prev = NULL;
+
+    // traverse to the last node
+    while (tmp->next != NULL) {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+
+    const int item = tmp->data;
+
+    if (prev != NULL) {
+        prev->next = NULL;
+    } else {
+        *head = NULL;
+    }
+
+    free(tmp);
+    return item;
 }
 
 void enqueueStack(queue *q, int x) {
